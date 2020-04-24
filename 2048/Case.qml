@@ -17,11 +17,11 @@ Item {
         y: 0
         width: 50
         height: 50
-        text: qsTr("Value")
         font.family: "Tahoma"
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
         font.pixelSize: 24
+        focus: true
     }
 
 }
