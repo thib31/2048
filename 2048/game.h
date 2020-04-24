@@ -2,6 +2,9 @@
 #define GAME_H
 
 #include <QObject>
+#include <vector>
+
+using namespace std;
 
 class game : public QObject
 {
