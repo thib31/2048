@@ -20,7 +20,9 @@ Window {
             id: element11
             x: 5
             y: 5
-            valeurText: vueGame.valQML[0]
+            numero: 0
+            valeurText: vueGame.valQML[numero]
+            couleur: vueGame.colQML[numero]
 
         }
 
@@ -28,105 +30,135 @@ Window {
             id: element12
             x: 60
             y: 5
-            valeurText: vueGame.valQML[1]
+            numero: 1
+            valeurText: vueGame.valQML[numero]
+            couleur: vueGame.colQML[numero]
         }
 
         Case {
             id: element13
             x: 115
             y: 5
-            valeurText: vueGame.valQML[2]
+            numero: 2
+            valeurText: vueGame.valQML[numero]
+            couleur: vueGame.colQML[numero]
         }
 
         Case {
             id: element14
             x: 170
             y: 5
-            valeurText: vueGame.valQML[3]
+            numero: 3
+            valeurText: vueGame.valQML[numero]
+            couleur: vueGame.colQML[numero]
         }
 
         Case {
             id: element21
             x: 5
             y: 60
-            valeurText: vueGame.valQML[4]
+            numero: 4
+            valeurText: vueGame.valQML[numero]
+            couleur: vueGame.colQML[numero]
         }
 
         Case {
             id: element22
             x: 60
             y: 60
-            valeurText: vueGame.valQML[5]
+            numero: 5
+            valeurText: vueGame.valQML[numero]
+            couleur: vueGame.colQML[numero]
         }
 
         Case {
             id: element23
             x: 115
             y: 60
-            valeurText: vueGame.valQML[6]
+            numero: 6
+            valeurText: vueGame.valQML[numero]
+            couleur: vueGame.colQML[numero]
         }
 
         Case {
             id: element24
             x: 170
             y: 60
-            valeurText: vueGame.valQML[7]
+            numero: 7
+            valeurText: vueGame.valQML[numero]
+            couleur: vueGame.colQML[numero]
         }
 
         Case {
             id: element31
             x: 5
             y: 115
-            valeurText: vueGame.valQML[8]
+            numero: 8
+            valeurText: vueGame.valQML[numero]
+            couleur: vueGame.colQML[numero]
         }
 
         Case {
             id: element32
             x: 60
             y: 115
-            valeurText: vueGame.valQML[9]
+            numero: 9
+            valeurText: vueGame.valQML[numero]
+            couleur: vueGame.colQML[numero]
         }
 
         Case {
             id: element33
             x: 115
             y: 115
-            valeurText: vueGame.valQML[10]
+            numero: 10
+            valeurText: vueGame.valQML[numero]
+            couleur: vueGame.colQML[numero]
         }
 
         Case {
             id: element34
             x: 170
             y: 115
-            valeurText: vueGame.valQML[11]
+            numero: 11
+            valeurText: vueGame.valQML[numero]
+            couleur: vueGame.colQML[numero]
         }
 
         Case {
             id: element41
             x: 5
             y: 170
-            valeurText: vueGame.valQML[12]
+            numero: 12
+            valeurText: vueGame.valQML[numero]
+            couleur: vueGame.colQML[numero]
         }
 
         Case {
             id: element42
             x: 60
             y: 170
-            valeurText: vueGame.valQML[13]
+            numero: 13
+            valeurText: vueGame.valQML[numero]
+            couleur: vueGame.colQML[numero]
         }
 
         Case {
             id: element43
             x: 115
             y: 170
-            valeurText: vueGame.valQML[14]
+            numero: 14
+            valeurText: vueGame.valQML[numero]
+            couleur: vueGame.colQML[numero]
         }
 
         Case {
             id: element44
             x: 170
             y: 170
-            valeurText: vueGame.valQML[15]
+            numero: 15
+            valeurText: vueGame.valQML[numero]
+            couleur: vueGame.colQML[numero]
         }
     }
 

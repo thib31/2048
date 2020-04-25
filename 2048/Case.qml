@@ -2,13 +2,14 @@ import QtQuick 2.0
 
 Item {
     property alias valeurText: valeur.text
+    property alias couleur: rectangle.color
+    property int numero
     Rectangle {
         id: rectangle
         x: 0
         y: 0
         width: 50
         height: 50
-        color: "#ffffff"
     }
 
     Text {
@@ -23,5 +24,4 @@ Item {
         font.pixelSize: 24
         focus: true
     }
-
 }

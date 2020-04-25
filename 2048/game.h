@@ -14,8 +14,10 @@ public:
     void nouvPartie();
 
     Q_PROPERTY(QStringList valQML READ readVal NOTIFY gameChanged)
+    Q_PROPERTY(QStringList colQML READ readCol NOTIFY gameChanged)
 
     QStringList readVal();
+    QStringList readCol();
 
 private:
     vector<int**> T;
@@ -23,6 +25,7 @@ private:
     int taille;
     string couleur[2]={"#dddddd","#333333"};
     QStringList Damier_valeurs;
+    QStringList Damier_couleurs;
 
 
 
