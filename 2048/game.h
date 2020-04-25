@@ -19,6 +19,7 @@ public:
     QStringList readVal();
     QStringList readCol();
 
+    Q_INVOKABLE void haut();
     void deplacement(int dir_i, int dir_j);
     void traiteListe(int atraiter[]);
     void condense(int atraiter[]);

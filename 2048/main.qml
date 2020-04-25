@@ -173,7 +173,9 @@ Window {
         MouseArea {
             id: mouseArea
             anchors.fill: parent
-            onClicked: vueGame.nouvPartie
+            onClicked: vueGame.haut()
         }
+
+
     }
 }

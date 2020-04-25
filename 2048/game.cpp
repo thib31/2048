@@ -22,7 +22,7 @@ void game::nouvPartie()
     for (int i=0; i<taille; i++) {
         Damier[i] = new int[taille];
         for (int j = 0; j < taille; j++) {
-            Damier[i][j] = 0;
+            Damier[i][j] = 1;
         }
     }
     // Insertion dans la "pile" du jeu
@@ -31,7 +31,7 @@ void game::nouvPartie()
     // Initialisation des damiers de valeurs et couleurs, vides pour l'instant.
     for (int i=0; i<16; i++){
         Damier_valeurs.push_back(QString());
-        Damier_couleurs.push_back(QString());
+        Damier_couleurs.push_back(QString::fromStdString(couleur[0]));
     }
 
 
@@ -41,6 +41,7 @@ void game::nouvPartie()
 
 
 QStringList game::readVal(){
+    cout<<"test"<<endl;
     for (int i=0; i<taille; i++) {
         for (int j = 0; j < taille; j++) {
             if (Damier[i][j]==0)
@@ -53,19 +54,22 @@ QStringList game::readVal(){
 }
 
 QStringList game::readCol(){
+    /*
     for (int i=0; i<taille; i++) {
         for (int j = 0; j < taille; j++) {
             Damier_couleurs[i*taille+j]=QString::fromStdString(couleur[Damier[i][j]]);
         }
     }
+    */
     return Damier_couleurs;
 }
 
 void game::deplacement(int dir_i, int dir_j){
+    cout<<"point 0";
     int debut; int fin;
     if (dir_i+dir_j==1){
         debut=0;
-        fin=taille-1;
+        fin=taille;
     }
     else{
         debut=taille;
@@ -74,17 +78,24 @@ void game::deplacement(int dir_i, int dir_j){
     int atraiter[4];
     int indices[4];
     int cpt(0);
+    cout<<"point 1";
+
     if (dir_j==0){          // 1er cas : déplacement vertical. On traite les colonnes l'une après l'autre.
         for (int j=0; j<taille; j++){
+            cpt=0;
             for (int i=debut; i!=fin; i+=dir_i){
                 atraiter[cpt]=Damier[i][j];             // On stocke la ligne ou colonne sous forme de liste, pour utiliser une seule fonction de traitement
                 indices[cpt]=i;
+                cpt++;
             }
+            cout<<"point 2";
             traiteListe(atraiter);
-            for (int i=0; i<taille; i++)
-                Damier[indices[i]][j]=atraiter[i];
+            for (int k=0; k<taille; k++)
+                Damier[indices[k]][j]=atraiter[k];
         }
     }
+    cout<<"Fini";
+    gameChanged();
 }
 
 void game::traiteListe(int *atraiter){
@@ -126,5 +137,12 @@ void game::fusionne(int *atraiter){
             atraiter[k+1]=0;
             k+=2;
         }
+        else k++;
     }
+    cout<<"fusion";
+}
+
+void game::haut(){
+    cout<<"Point3"<<endl;
+    deplacement(1,0);
 }
