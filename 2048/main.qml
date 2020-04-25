@@ -6,7 +6,7 @@ Window {
     visible: true
     width: 640
     height: 480
-    title: qsTr("Hello World")
+    title: qsTr("2048")
     
     Rectangle {
         id: rectangle2
@@ -177,24 +177,5 @@ Window {
             valeurText: vueGame.valQML[numero]
             couleur: vueGame.colQML[numero]
         }
-    }
-
-    Rectangle {
-        id: rectangle
-        x: 424
-        y: 156
-        width: 100
-        height: 50
-        color: "#dddddd"
-
-
-        MouseArea {
-            id: mouseArea
-            anchors.fill: parent
-            onClicked: vueGame.deplacement(1,0)
-
-        }
-
-
     }
 }

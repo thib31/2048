@@ -23,9 +23,14 @@ void game::nouvPartie()
     for (int i=0; i<taille; i++) {
         Damier[i] = new int[taille];
         for (int j = 0; j < taille; j++) {
-            Damier[i][j] = 1;
+            Damier[i][j] = 0;
         }
     }
+
+    // Première case remplie
+    Damier[rand()%taille][rand()%taille]=1;
+
+
     // Insertion dans la "pile" du jeu
     T.push_back(Damier);
 
@@ -100,6 +105,29 @@ void game::deplacement(int dir_i, int dir_j){
         }
         else{
             Damier[fin-dir_i][tabCaseVide[rand()%cptCaseVide]]=1;
+        }
+    }
+    else{          // 2nd cas : déplacement horizontal. On traite les lignes l'une après l'autre.
+        for (int i=0; i<taille; i++){
+            cpt=0;
+            for (int j=debut; j!=fin; j+=dir_j){
+                atraiter[cpt]=Damier[i][j];             // On stocke la ligne ou colonne sous forme de liste, pour utiliser une seule fonction de traitement
+                indices[cpt]=j;
+                cpt++;
+            }
+            traiteListe(atraiter);
+            for (int k=0; k<taille; k++)
+                Damier[i][indices[k]]=atraiter[k];
+            if (atraiter[taille-1]==0){
+                tabCaseVide[cptCaseVide]=i;
+                cptCaseVide++;
+            }
+        }
+        if (cptCaseVide==0){
+            // Partie perdue
+        }
+        else{
+            Damier[tabCaseVide[rand()%cptCaseVide]][fin-dir_j]=1;
         }
     }
     gameChanged();
