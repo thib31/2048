@@ -77,10 +77,12 @@ void game::deplacement(int dir_i, int dir_j){
     if (dir_j==0){          // 1er cas : déplacement vertical. On traite les colonnes l'une après l'autre.
         for (int j=0; j<taille; j++){
             for (int i=debut; i!=fin; i+=dir_i){
-                atraiter[cpt]=Damier[i][j];
+                atraiter[cpt]=Damier[i][j];             // On stocke la ligne ou colonne sous forme de liste, pour utiliser une seule fonction de traitement
                 indices[cpt]=i;
             }
-
+            traiteListe(atraiter);
+            for (int i=0; i<taille; i++)
+                Damier[indices[i]][j]=atraiter[i];
         }
     }
 }
@@ -115,8 +117,14 @@ void game::condense(int *atraiter){
 
 void game::fusionne(int *atraiter){
     int k(0);
-    while (k<taille){
-
+    while (k<taille-1){
+        if (atraiter[k]==0){
+            k=taille;
+        }
+        else if (atraiter[k]==atraiter[k+1]){
+            atraiter[k]++;
+            atraiter[k+1]=0;
+            k+=2;
+        }
     }
-
 }
