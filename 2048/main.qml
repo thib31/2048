@@ -15,6 +15,23 @@ Window {
         width: 225
         height: 225
         color: "#dddddd"
+        focus: true
+        Keys.onPressed: {
+         switch (event.key) {
+            case Qt.Key_Up:
+                vueGame.deplacement(1,0);
+                break;
+            case Qt.Key_Down:
+                vueGame.deplacement(-1,0);
+                break;
+            case Qt.Key_Left:
+                vueGame.deplacement(0,1);
+                break;
+            case Qt.Key_Right:
+                vueGame.deplacement(0,-1);
+                break;
+         }
+        }
 
         Case {
             id: element11
@@ -170,10 +187,12 @@ Window {
         height: 50
         color: "#dddddd"
 
+
         MouseArea {
             id: mouseArea
             anchors.fill: parent
-            onClicked: vueGame.haut()
+            onClicked: vueGame.deplacement(1,0)
+
         }
 
 

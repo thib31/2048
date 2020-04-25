@@ -71,8 +71,8 @@ void game::deplacement(int dir_i, int dir_j){
         fin=taille;
     }
     else{
-        debut=taille;
-        fin=1;
+        debut=taille-1;
+        fin=-1;
     }
     int atraiter[4];
     int indices[4];
