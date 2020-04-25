@@ -1,6 +1,7 @@
 #include "game.h"
 #include <iostream>
 #include <math.h>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -41,7 +42,6 @@ void game::nouvPartie()
 
 
 QStringList game::readVal(){
-    cout<<"test"<<endl;
     for (int i=0; i<taille; i++) {
         for (int j = 0; j < taille; j++) {
             if (Damier[i][j]==0)
@@ -65,7 +65,6 @@ QStringList game::readCol(){
 }
 
 void game::deplacement(int dir_i, int dir_j){
-    cout<<"point 0";
     int debut; int fin;
     if (dir_i+dir_j==1){
         debut=0;
@@ -78,8 +77,8 @@ void game::deplacement(int dir_i, int dir_j){
     int atraiter[4];
     int indices[4];
     int cpt(0);
-    cout<<"point 1";
-
+    int cptCaseVide(0);
+    int tabCaseVide[4];
     if (dir_j==0){          // 1er cas : déplacement vertical. On traite les colonnes l'une après l'autre.
         for (int j=0; j<taille; j++){
             cpt=0;
@@ -88,13 +87,21 @@ void game::deplacement(int dir_i, int dir_j){
                 indices[cpt]=i;
                 cpt++;
             }
-            cout<<"point 2";
             traiteListe(atraiter);
             for (int k=0; k<taille; k++)
                 Damier[indices[k]][j]=atraiter[k];
+            if (atraiter[taille-1]==0){
+                tabCaseVide[cptCaseVide]=j;
+                cptCaseVide++;
+            }
+        }
+        if (cptCaseVide==0){
+            // Partie perdue
+        }
+        else{
+            Damier[fin-dir_i][tabCaseVide[rand()%cptCaseVide]]=1;
         }
     }
-    cout<<"Fini";
     gameChanged();
 }
 
@@ -139,10 +146,8 @@ void game::fusionne(int *atraiter){
         }
         else k++;
     }
-    cout<<"fusion";
 }
 
 void game::haut(){
-    cout<<"Point3"<<endl;
     deplacement(1,0);
 }
