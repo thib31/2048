@@ -16,10 +16,12 @@ public:
     Q_PROPERTY(QStringList valQML READ readVal NOTIFY gameChanged)
     Q_PROPERTY(QStringList colQML READ readCol NOTIFY gameChanged)
     Q_PROPERTY(QStringList templateQML READ readTemplate NOTIFY gameChanged)
+    Q_PROPERTY(QStringList partiesQML READ readParties NOTIFY listePartieChanged)
 
     QStringList readVal();
     QStringList readCol();
     QStringList readTemplate();
+    QStringList readParties();
 
     Q_INVOKABLE void precedent();
     Q_INVOKABLE void suivant();
@@ -48,14 +50,17 @@ private:
     QStringList Damier_couleurs;                // Damier envoyé à l'interface QML, contenant les couleurs des cases
     QStringList templateQML;
 
+
     //string const nomFichier=("partiesEnregistrees.txt");
     string const nomFichier=("C:/Users/thilv/Desktop/2048/2048/Fichiers/partiesEnregistrees.txt");
     string const tempFichier=("C:/Users/thilv/Desktop/2048/2048/Fichiers/Temp.txt");
     QStringList nomsParties;
 
 
+
 signals:
     void gameChanged();
+    void listePartieChanged();
 };
 
 #endif // GAME_H

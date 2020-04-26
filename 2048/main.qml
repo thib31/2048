@@ -215,12 +215,18 @@ Window {
         id: boutonChargerPartie
         x: rectangle.x + rectangle.width + 50
         y: rectangle.y +115
-        action.onClicked: vueGame.chargePartie("Nom")
+        action.onClicked: charger.visible=true
         valeurText: qsTr("Charger Partie")
     }
 
     Enregistrer {
         id: enregistrer
+        anchors.fill: parent
+        visible: false
+    }
+
+    Charger {
+        id: charger
         anchors.fill: parent
         visible: false
     }

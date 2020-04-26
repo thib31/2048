@@ -4,5 +4,6 @@
         <file>Case.qml</file>
         <file>Bouton.qml</file>
         <file>Enregistrer.qml</file>
+        <file>Charger.qml</file>
     </qresource>
 </RCC>

@@ -16,6 +16,7 @@ game::game(QObject *parent) : QObject(parent)
     templateQML.push_back(QString::fromStdString("#80cfceca"));
     templateQML.push_back(QString::fromStdString("#bbada0"));
     templateQML.push_back(QString::fromStdString(couleur[0]));
+    templateQML.push_back(QString::fromStdString("#f65e39"));
     // Création des damiers de valeurs et couleurs.
     for (int i=0; i<16; i++){
         Damier_valeurs.push_back(QString());
@@ -48,6 +49,7 @@ void game::nouvPartie()
 
     // MaJ initiale du jeu
     gameChanged();
+    listePartieChanged();
 }
 
 
@@ -76,6 +78,12 @@ QStringList game::readCol(){
 
 QStringList game::readTemplate(){
     return templateQML;
+}
+
+QStringList game::readParties(){
+    nomsParties.clear();
+    getNomPartie();
+    return nomsParties;
 }
 
 void game::deplacement(int dir_i, int dir_j){
@@ -233,6 +241,7 @@ int game::enregistrePartie(QString nom, bool force){
             }
         }
         parties<<endl;
+        listePartieChanged();
         return 0;
     }
     else return 1;
@@ -241,10 +250,12 @@ int game::enregistrePartie(QString nom, bool force){
 void game::getNomPartie(){
     ifstream parties(nomFichier.c_str());
     string nom;
-    do{
-        parties>>nom;
+    string trash;
+    parties>>nom;
+    while(getline(parties, trash)){
         nomsParties.push_back(QString::fromStdString(nom));
-    }while(getline(parties, nom));
+        parties>>nom;
+    };
 }
 
 bool game::rechPartie(string nom){

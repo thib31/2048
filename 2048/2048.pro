@@ -35,5 +35,6 @@ HEADERS += \
 
 DISTFILES += \
     Bouton.qml \
+    Charger.qml \
     Enregistrer.qml \
     case.qml

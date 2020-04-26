@@ -12,6 +12,8 @@ Item {
         id: rectangle
         anchors.fill: parent
         color: vueGame.templateQML[3]
+        radius: 3
+        border.width: 0
 
         Text {
             id: texteBouton

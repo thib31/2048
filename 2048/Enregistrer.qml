@@ -15,8 +15,8 @@ Item {
             id: rectangle
             width: 350
             height: 250
-            x: (parent.width-rectangle.width)/2
-            y: (parent.height-rectangle.height)/2
+            x: (parent.width-width)/2
+            y: (parent.height-height)/2
             color: vueGame.templateQML[0]
 
             Text {
@@ -61,7 +61,7 @@ Item {
 
             Bouton {
                 id: boutonEnreg
-                x: 49
+                x: parent.width/4-width/2
                 y: 192
                 valeurText: qsTr("Enregistrer")
                 action.onClicked: {
@@ -76,7 +76,7 @@ Item {
 
             Bouton {
                 id: boutonAnnulEnr
-                x: 197
+                x: parent.width*3/4-width/2
                 y: boutonEnreg.y
                 valeurText: qsTr("Annuler")
                 action.onClicked: fenetre.visible=false
@@ -88,7 +88,7 @@ Item {
             id: enregForce
             color: vueGame.templateQML[1]
             anchors.fill: parent
-            //visible: false
+            visible: false
 
             Rectangle {
                 id: rectangle4
@@ -113,7 +113,7 @@ Item {
                     x: parent.width/4-width/2
                     y: 62
                     valeurText: qsTr("Oui")
-                    couleur: "#ff0000"
+                    couleur: vueGame.templateQML[4]
                     action.onClicked: {
                         vueGame.enregistrePartie(textInput.text,true)
                         fenetre.visible=false
