@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <vector>
 #include <fstream>
-
+#include <cstdio>
 
 using namespace std;
 
@@ -215,8 +215,11 @@ void game::recupDamier(){
 }
 
 int game::enregistrePartie(QString nom, bool force){
+    if (force) deletePartie(nom);
+
     ofstream parties(nomFichier.c_str(), ios::app);
     string nomStr=nom.toStdString();
+
     if (force|| !rechPartie(nomStr)){
         parties<<nomStr<<" "<<etape<<" "<<T.size();
         for (int k=0; T.size()-k>0; k++){
@@ -282,7 +285,7 @@ void game::chargePartie(QString nom){
 
 void game::deletePartie(QString nom){
     ifstream parties(nomFichier.c_str());
-    ofstream temp("Temp.txt");
+    ofstream temp(tempFichier.c_str());
     string nomStr=nom.toStdString();
     string name;
     string queue;
@@ -293,4 +296,12 @@ void game::deletePartie(QString nom){
             temp<<name<<" "<<queue<<endl;
         }
     }
+
+    parties.close();
+    temp.close();
+    //remove(nomFichier.c_str());
+    if (remove(nomFichier.c_str()) != 0)
+            perror("File deletion failed");
+    rename(tempFichier.c_str(),nomFichier.c_str());
+
 }

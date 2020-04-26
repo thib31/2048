@@ -50,6 +50,7 @@ private:
 
     //string const nomFichier=("partiesEnregistrees.txt");
     string const nomFichier=("C:/Users/thilv/Desktop/2048/2048/Fichiers/partiesEnregistrees.txt");
+    string const tempFichier=("C:/Users/thilv/Desktop/2048/2048/Fichiers/Temp.txt");
     QStringList nomsParties;
 
 

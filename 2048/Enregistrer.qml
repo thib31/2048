@@ -53,7 +53,7 @@ Item {
                     id: textInput
                     anchors.fill: parent
                     anchors.margins: 4
-                    text: "Nom de la partie"
+                    text: "Nom"
                     font.pixelSize: 12
                     verticalAlignment: Text.AlignVCenter
                 }
@@ -65,7 +65,7 @@ Item {
                 y: 192
                 valeurText: qsTr("Enregistrer")
                 action.onClicked: {
-                    if (vueGame.enregistrePartie(textInput.text,0)===0){
+                    if (vueGame.enregistrePartie(textInput.text,false)===0){
                         fenetre.visible=false
                     }
                     else{
@@ -113,7 +113,7 @@ Item {
                     y: 192
                     valeurText: qsTr("Oui")
                     action.onClicked: {
-                        vueGame.enregistrePartie(textInput.text,0)
+                        vueGame.enregistrePartie(textInput.text,true)
                         fenetre.visible=false
                         enregForce.visible=false
                     }
