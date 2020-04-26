@@ -55,7 +55,7 @@ OBJECTS       = debug/game.o \
 		debug/qrc_qml.o \
 		debug/moc_game.o
 
-DIST          = bouton.qml \
+DIST          = Bouton.qml \
 		case.qml ..\2048\game.h ..\2048\game.cpp \
 		..\2048\main.cpp
 QMAKE_TARGET  = 2048
@@ -103,7 +103,7 @@ compiler_rcc_clean:
 debug/qrc_qml.cpp: ../2048/qml.qrc \
 		C:/Qt/5.12.7/mingw73_64/bin/rcc.exe \
 		../2048/Case.qml \
-		../2048/bouton.qml \
+		../2048/Bouton.qml \
 		../2048/main.qml
 	C:\Qt\5.12.7\mingw73_64\bin\rcc.exe -name qml ..\2048\qml.qrc -o debug\qrc_qml.cpp
 

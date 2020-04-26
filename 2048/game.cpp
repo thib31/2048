@@ -2,6 +2,7 @@
 #include <iostream>
 #include <math.h>
 #include <stdlib.h>
+#include <vector>
 
 using namespace std;
 
@@ -33,6 +34,7 @@ void game::nouvPartie()
 
     // Insertion dans la "pile" du jeu
     T.push_back(Damier);
+    etape=0;
 
     // Initialisation des damiers de valeurs et couleurs, vides pour l'instant.
     for (int i=0; i<16; i++){
@@ -70,6 +72,10 @@ QStringList game::readCol(){
 }
 
 void game::deplacement(int dir_i, int dir_j){
+    while (T.size()-etape>1){
+        T.pop_back();
+    }
+    recupDamier();
     int debut; int fin;
     if (dir_i+dir_j==1){
         debut=0;
@@ -130,6 +136,8 @@ void game::deplacement(int dir_i, int dir_j){
             Damier[tabCaseVide[rand()%cptCaseVide]][fin-dir_j]=1;
         }
     }
+    T.push_back(Damier);
+    etape++;
     gameChanged();
 }
 
@@ -176,6 +184,28 @@ void game::fusionne(int *atraiter){
     }
 }
 
-void game::haut(){
-    deplacement(1,0);
+void game::precedent(){
+    if (etape>0){
+        etape--;
+        Damier=T[etape];
+        gameChanged();
+    }
+}
+
+void game::suivant(){
+    if (1<T.size()-etape){
+        etape++;
+        Damier=T[etape];
+        gameChanged();
+    }
+}
+
+void game::recupDamier(){
+        Damier = new int* [taille];
+    for (int i=0; i<taille; i++) {
+        Damier[i] = new int[taille];
+        for (int j = 0; j < taille; j++) {
+            Damier[i][j] = T[etape][i][j];
+        }
+    }
 }

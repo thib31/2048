@@ -1,7 +1,6 @@
 import QtQuick 2.12
 import QtQuick.Window 2.12
 
-
 Window {
     visible: true
     width: 640
@@ -9,7 +8,7 @@ Window {
     title: qsTr("2048")
     
     Rectangle {
-        id: rectangle2
+        id: rectangle
         x: 100
         y: 66
         width: 225
@@ -177,5 +176,21 @@ Window {
             valeurText: vueGame.valQML[numero]
             couleur: vueGame.colQML[numero]
         }
+    }
+
+    Bouton {
+        id: boutonPrecedent
+        x: rectangle.x
+        y: rectangle.y + rectangle.height+5
+        action.onClicked: vueGame.precedent()
+
+        }
+
+    Bouton {
+        id: boutonSuivant
+        x: rectangle.x + 115
+        y: rectangle.y + rectangle.height+5
+        action.onClicked: vueGame.suivant()
+
     }
 }

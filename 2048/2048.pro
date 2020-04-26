@@ -34,5 +34,5 @@ HEADERS += \
     game.h
 
 DISTFILES += \
-    bouton.qml \
+    Bouton.qml \
     case.qml

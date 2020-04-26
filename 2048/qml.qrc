@@ -2,6 +2,6 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>Case.qml</file>
-        <file>bouton.qml</file>
+        <file>Bouton.qml</file>
     </qresource>
 </RCC>

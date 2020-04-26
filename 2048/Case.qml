@@ -4,20 +4,17 @@ Item {
     property alias valeurText: valeur.text
     property alias couleur: rectangle.color
     property int numero
+    width: 50
+    height: 50
+
     Rectangle {
         id: rectangle
-        x: 0
-        y: 0
-        width: 50
-        height: 50
+        anchors.fill: parent
     }
 
     Text {
         id: valeur
-        x: 0
-        y: 0
-        width: 50
-        height: 50
+        anchors.fill: parent
         font.family: "Tahoma"
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
