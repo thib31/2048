@@ -3,5 +3,6 @@
         <file>main.qml</file>
         <file>Case.qml</file>
         <file>Bouton.qml</file>
+        <file>Enregistrer.qml</file>
     </qresource>
 </RCC>

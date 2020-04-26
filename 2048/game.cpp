@@ -212,3 +212,6 @@ void game::recupDamier(){
     }
 }
 
+int game::enregistrePartie(QString nom){
+    return 1;
+}

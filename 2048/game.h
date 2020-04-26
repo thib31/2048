@@ -29,6 +29,10 @@ public:
     void fusionne(int atraiter[]);
     void recupDamier();
 
+    Q_INVOKABLE int enregistrePartie(QString nom);
+
+
+
 private:
     vector<int**> T;                            // Contient la liste des positions dans le jeu (on stocke uniquement les exposants)
     int** Damier;                               // Element de travail = dernier élément de T

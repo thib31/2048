@@ -217,4 +217,10 @@ Window {
         action.onClicked: vueGame.nouvPartie()
         valeurText: qsTr("Charger Partie")
     }
+
+    Enregistrer {
+        id: enregistrer
+        anchors.fill: parent
+        //visible: false
+    }
 }

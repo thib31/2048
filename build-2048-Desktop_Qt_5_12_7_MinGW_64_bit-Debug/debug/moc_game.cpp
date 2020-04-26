@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_game_t {
-    QByteArrayData data[12];
-    char stringdata0[97];
+    QByteArrayData data[14];
+    char stringdata0[118];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -40,14 +40,17 @@ QT_MOC_LITERAL(5, 39, 7), // "suivant"
 QT_MOC_LITERAL(6, 47, 11), // "deplacement"
 QT_MOC_LITERAL(7, 59, 5), // "dir_i"
 QT_MOC_LITERAL(8, 65, 5), // "dir_j"
-QT_MOC_LITERAL(9, 71, 6), // "valQML"
-QT_MOC_LITERAL(10, 78, 6), // "colQML"
-QT_MOC_LITERAL(11, 85, 11) // "templateQML"
+QT_MOC_LITERAL(9, 71, 16), // "enregistrePartie"
+QT_MOC_LITERAL(10, 88, 3), // "nom"
+QT_MOC_LITERAL(11, 92, 6), // "valQML"
+QT_MOC_LITERAL(12, 99, 6), // "colQML"
+QT_MOC_LITERAL(13, 106, 11) // "templateQML"
 
     },
     "game\0gameChanged\0\0nouvPartie\0precedent\0"
-    "suivant\0deplacement\0dir_i\0dir_j\0valQML\0"
-    "colQML\0templateQML"
+    "suivant\0deplacement\0dir_i\0dir_j\0"
+    "enregistrePartie\0nom\0valQML\0colQML\0"
+    "templateQML"
 };
 #undef QT_MOC_LITERAL
 
@@ -57,21 +60,22 @@ static const uint qt_meta_data_game[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-       5,   14, // methods
-       3,   48, // properties
+       6,   14, // methods
+       3,   56, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   39,    2, 0x06 /* Public */,
+       1,    0,   44,    2, 0x06 /* Public */,
 
  // methods: name, argc, parameters, tag, flags
-       3,    0,   40,    2, 0x02 /* Public */,
-       4,    0,   41,    2, 0x02 /* Public */,
-       5,    0,   42,    2, 0x02 /* Public */,
-       6,    2,   43,    2, 0x02 /* Public */,
+       3,    0,   45,    2, 0x02 /* Public */,
+       4,    0,   46,    2, 0x02 /* Public */,
+       5,    0,   47,    2, 0x02 /* Public */,
+       6,    2,   48,    2, 0x02 /* Public */,
+       9,    1,   53,    2, 0x02 /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -81,11 +85,12 @@ static const uint qt_meta_data_game[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void, QMetaType::Int, QMetaType::Int,    7,    8,
+    QMetaType::Int, QMetaType::QString,   10,
 
  // properties: name, type, flags
-       9, QMetaType::QStringList, 0x00495001,
-      10, QMetaType::QStringList, 0x00495001,
       11, QMetaType::QStringList, 0x00495001,
+      12, QMetaType::QStringList, 0x00495001,
+      13, QMetaType::QStringList, 0x00495001,
 
  // properties: notify_signal_id
        0,
@@ -106,6 +111,8 @@ void game::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void *
         case 2: _t->precedent(); break;
         case 3: _t->suivant(); break;
         case 4: _t->deplacement((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 5: { int _r = _t->enregistrePartie((*reinterpret_cast< QString(*)>(_a[1])));
+            if (_a[0]) *reinterpret_cast< int*>(_a[0]) = std::move(_r); }  break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -164,13 +171,13 @@ int game::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 5)
+        if (_id < 6)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 5;
+        _id -= 6;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 5)
+        if (_id < 6)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 5;
+        _id -= 6;
     }
 #ifndef QT_NO_PROPERTIES
     else if (_c == QMetaObject::ReadProperty || _c == QMetaObject::WriteProperty
