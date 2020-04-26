@@ -8,14 +8,13 @@ Window {
     title: qsTr("2048")
     color: vueGame.templateQML[0]
     
-    Rectangle {
-        id: rectangle
-        x: 210
-        y: 66
-        width: 225
-        height: 225
-        color: "#bbada0"
-        focus: true
+    FocusScope {
+        id: focusScope
+        x: 0
+        y: 0
+        width: 100
+        height: 100
+        focus: vueGame.templateQML[5]
         Keys.onPressed: {
          switch (event.key) {
             case Qt.Key_Up:
@@ -32,6 +31,16 @@ Window {
                 break;
          }
         }
+    }
+
+    Rectangle {
+        id: rectangle
+        x: 210
+        y: 66
+        width: 225
+        height: 225
+        color: "#bbada0"
+        focus: true
 
         Case {
             id: element11

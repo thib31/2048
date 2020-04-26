@@ -17,6 +17,7 @@ game::game(QObject *parent) : QObject(parent)
     templateQML.push_back(QString::fromStdString("#bbada0"));
     templateQML.push_back(QString::fromStdString(couleur[0]));
     templateQML.push_back(QString::fromStdString("#f65e39"));
+    templateQML.push_back(QString::fromStdString("true"));
     // Création des damiers de valeurs et couleurs.
     for (int i=0; i<16; i++){
         Damier_valeurs.push_back(QString());
@@ -83,6 +84,7 @@ QStringList game::readTemplate(){
 QStringList game::readParties(){
     nomsParties.clear();
     getNomPartie();
+    nomsParties.sort();
     return nomsParties;
 }
 
@@ -232,6 +234,7 @@ int game::enregistrePartie(QString nom, bool force){
     string nomStr=nom.toStdString();
 
     if (force|| !rechPartie(nomStr)){
+        parties<<count(nomStr.begin(), nomStr.end(), ' ')+1<<" ";
         parties<<nomStr<<" "<<etape<<" "<<T.size();
         for (int k=0; T.size()-k>0; k++){
             for (int i=0; i<taille; i++) {
@@ -250,21 +253,48 @@ int game::enregistrePartie(QString nom, bool force){
 void game::getNomPartie(){
     ifstream parties(nomFichier.c_str());
     string nom;
+    string mot;
+    int longNom;
     string trash;
-    parties>>nom;
+    parties>>longNom;
+    for (int k=0; k<longNom; k++){
+        parties>>mot;
+        nom+=mot+" ";
+    }
+    nom.pop_back();
     while(getline(parties, trash)){
         nomsParties.push_back(QString::fromStdString(nom));
-        parties>>nom;
+        parties>>longNom;
+        nom="";
+        for (int k=0; k<longNom; k++){
+            parties>>mot;
+            nom+=mot+" ";
+        }
+        nom.pop_back();
     };
 }
 
 bool game::rechPartie(string nom){
     ifstream parties(nomFichier.c_str());
     string test;
+    int longTest;
+    string mot;
     string trash;
-    do{
-        parties>>test;
-    }while(test!=nom && getline(parties, trash));
+    parties>>longTest;
+    for (int k=0; k<longTest; k++){
+        parties>>mot;
+        test+=mot+" ";
+    }
+    test.pop_back();
+    while(test!=nom && getline(parties, trash)){
+        parties>>longTest;
+        test="";
+        for (int k=0; k<longTest; k++){
+            parties>>mot;
+            test+=mot+" ";
+        }
+        test.pop_back();
+    }
     if (test==nom) return true;
     else return false;
 }
@@ -273,15 +303,25 @@ void game::chargePartie(QString nom){
     ifstream parties(nomFichier.c_str());
     string nomStr=nom.toStdString();
     string test;
+    int longTest;
+    string mot;
     string trash;
     int longueurT;
 
-    parties>>test;
+    parties>>longTest;
+    for (int k=0; k<longTest; k++){
+        parties>>mot;
+        test+=mot+" ";
+    } test.pop_back();
     while(test!=nomStr){
         getline(parties, trash);
-        parties>>test;
+        parties>>longTest;
+        test="";
+        for (int k=0; k<longTest; k++){
+            parties>>mot;
+            test+=mot+" ";
+        } test.pop_back();
     }
-
     parties>>etape;
     parties>>longueurT;
     for (int k=0; k<longueurT; k++){
@@ -295,27 +335,39 @@ void game::chargePartie(QString nom){
         T.push_back(Damier);
     }
     gameChanged();
+
 }
 
 void game::deletePartie(QString nom){
     ifstream parties(nomFichier.c_str());
     ofstream temp(tempFichier.c_str());
     string nomStr=nom.toStdString();
-    string name;
+    string test;
+    int longTest;
+    string mot;
     string queue;
 
-    parties>>name;
+    parties>>longTest;
+    test="";
+    for (int k=0; k<longTest; k++){
+        parties>>mot;
+        test+=mot+" ";
+    } test.pop_back();
     while(getline(parties, queue)){
-        if (nomStr!=name){
-            temp<<name<<" "<<queue<<endl;
+        if (nomStr!=test){
+            temp<<longTest<<" "<<test<<queue<<endl;
         }
+        parties>>longTest;
+        test="";
+        for (int k=0; k<longTest; k++){
+            parties>>mot;
+            test+=mot+" ";
+        } test.pop_back();
     }
 
     parties.close();
     temp.close();
-    //remove(nomFichier.c_str());
-    if (remove(nomFichier.c_str()) != 0)
-            perror("File deletion failed");
+    remove(nomFichier.c_str());
     rename(tempFichier.c_str(),nomFichier.c_str());
 
 }

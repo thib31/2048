@@ -45,6 +45,7 @@ Item {
                         title: "Nom de la partie"
                     }
                     model: vueGame.partiesQML
+                    sortIndicatorOrder: Qt.AscendingOrder
                 }
             }
 
@@ -52,10 +53,11 @@ Item {
                 id: boutonCharg
                 x: parent.width/4-width/2
                 y: 192
-                valeurText: qsTr("Enregistrer")
+                valeurText: qsTr("Charger")
+                couleur: vueGame.templateQML[4]
                 action.onClicked: {
-                    console.log(table.currentRow)
-                    //vueGame.chargePartie(table.currentRow)
+                    vueGame.chargePartie(vueGame.partiesQML[table.currentRow])
+                    fenetreChargement.visible=false
                 }
             }
 
