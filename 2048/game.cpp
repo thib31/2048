@@ -12,6 +12,10 @@ game::game(QObject *parent) : QObject(parent)
 {
     // On déclare les premiers paramètres/variables
     taille=4;
+    templateQML.push_back(QString::fromStdString("#fbf8ef"));
+    templateQML.push_back(QString::fromStdString("#80cfceca"));
+    templateQML.push_back(QString::fromStdString("#bbada0"));
+    templateQML.push_back(QString::fromStdString(couleur[0]));
     // Création des damiers de valeurs et couleurs.
     for (int i=0; i<16; i++){
         Damier_valeurs.push_back(QString());
@@ -71,7 +75,6 @@ QStringList game::readCol(){
 }
 
 QStringList game::readTemplate(){
-    templateQML.push_back(QString::fromStdString(couleur[0]));
     return templateQML;
 }
 

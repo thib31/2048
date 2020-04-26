@@ -7,8 +7,8 @@ Item {
 
     Rectangle {
         id: rectangle1
+        color: vueGame.templateQML[1]
 
-        color: "#94999999"
         anchors.fill: parent
 
         Rectangle {
@@ -17,7 +17,7 @@ Item {
             height: 250
             x: (parent.width-rectangle.width)/2
             y: (parent.height-rectangle.height)/2
-            color: "#dddddd"
+            color: vueGame.templateQML[0]
 
             Text {
                 id: nomFenetre
@@ -86,9 +86,9 @@ Item {
 
         Rectangle {
             id: enregForce
-            color: "#94999999"
+            color: vueGame.templateQML[1]
             anchors.fill: parent
-            visible: false
+            //visible: false
 
             Rectangle {
                 id: rectangle4
@@ -96,32 +96,35 @@ Item {
                 height: 120
                 x: (parent.width-width)/2
                 y: (parent.height-height)/2
-                color: "#dddddd"
+                color: vueGame.templateQML[0]
 
                 Text {
                     id: nomFenetre2
                     x: 0
-                    y: 27
+                    y: 15
                     width: parent.width
-                    text: qsTr("Un fichier portant ce nom existe déjà, voulez-vous continuer ?")
-                    font.pixelSize: 12
+                    text: qsTr("Un fichier portant ce nom existe déjà.\n Voulez-vous continuer ?")
+                    font.bold: true
+                    font.pixelSize: 14
                     horizontalAlignment: Text.AlignHCenter
                 }
                 Bouton {
                     id: boutonEnreg2
-                    x: 49
-                    y: 192
+                    x: parent.width/4-width/2
+                    y: 62
                     valeurText: qsTr("Oui")
+                    couleur: "#ff0000"
                     action.onClicked: {
                         vueGame.enregistrePartie(textInput.text,true)
                         fenetre.visible=false
                         enregForce.visible=false
                     }
+
                 }
 
                 Bouton {
                     id: boutonAnnulEnr2
-                    x: 197
+                    x: parent.width*3/4-width/2
                     y: boutonEnreg2.y
                     valeurText: qsTr("Non")
                     action.onClicked: enregForce.visible=false
@@ -131,3 +134,9 @@ Item {
     }
 
 }
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+##^##*/

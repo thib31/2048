@@ -3,6 +3,7 @@ import QtQuick 2.0
 Item {
     property alias valeurText: texteBouton.text
     property alias action: mouseArea
+    property alias couleur: rectangle.color
     //property alias action: mouseArea.onClicked
     width: 110
     height: 50
@@ -10,7 +11,7 @@ Item {
     Rectangle {
         id: rectangle
         anchors.fill: parent
-        color: vueGame.templateQML[0]
+        color: vueGame.templateQML[3]
 
         Text {
             id: texteBouton

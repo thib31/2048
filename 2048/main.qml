@@ -6,6 +6,7 @@ Window {
     width: 645
     height: 480
     title: qsTr("2048")
+    color: vueGame.templateQML[0]
     
     Rectangle {
         id: rectangle
