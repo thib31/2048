@@ -29,7 +29,12 @@ public:
     void fusionne(int atraiter[]);
     void recupDamier();
 
-    Q_INVOKABLE int enregistrePartie(QString nom);
+    Q_INVOKABLE int enregistrePartie(QString nom, bool force);
+    Q_INVOKABLE void chargePartie(QString nom);
+    Q_INVOKABLE void deletePartie(QString nom);
+    void getNomPartie();
+    bool rechPartie(string nom);
+
 
 
 
@@ -43,7 +48,9 @@ private:
     QStringList Damier_couleurs;                // Damier envoyé à l'interface QML, contenant les couleurs des cases
     QStringList templateQML;
 
-
+    //string const nomFichier=("partiesEnregistrees.txt");
+    string const nomFichier=("C:/Users/thilv/Desktop/2048/2048/Fichiers/partiesEnregistrees.txt");
+    QStringList nomsParties;
 
 
 signals:

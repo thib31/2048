@@ -113,10 +113,9 @@ Item {
                     y: 192
                     valeurText: qsTr("Oui")
                     action.onClicked: {
-                        if (vueGame.enregistrePartie(textInput.text,0)===0){
-                            fenetre.visible=false
-                            enregForce.visible=true
-                        }
+                        vueGame.enregistrePartie(textInput.text,0)
+                        fenetre.visible=false
+                        enregForce.visible=false
                     }
                 }
 

@@ -206,7 +206,7 @@ Window {
         id: boutonEnregPartie
         x: rectangle.x + rectangle.width + 50
         y: rectangle.y +60
-        action.onClicked: vueGame.nouvPartie()
+        action.onClicked: enregistrer.visible=true
         valeurText: qsTr("Enregistrer Partie")
     }
 
@@ -214,13 +214,13 @@ Window {
         id: boutonChargerPartie
         x: rectangle.x + rectangle.width + 50
         y: rectangle.y +115
-        action.onClicked: vueGame.nouvPartie()
+        action.onClicked: vueGame.chargePartie("Nom")
         valeurText: qsTr("Charger Partie")
     }
 
     Enregistrer {
         id: enregistrer
         anchors.fill: parent
-        //visible: false
+        visible: false
     }
 }

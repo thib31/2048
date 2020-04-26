@@ -3,6 +3,8 @@
 #include <math.h>
 #include <stdlib.h>
 #include <vector>
+#include <fstream>
+
 
 using namespace std;
 
@@ -212,6 +214,83 @@ void game::recupDamier(){
     }
 }
 
-int game::enregistrePartie(QString nom){
-    return 1;
+int game::enregistrePartie(QString nom, bool force){
+    ofstream parties(nomFichier.c_str(), ios::app);
+    string nomStr=nom.toStdString();
+    if (force|| !rechPartie(nomStr)){
+        parties<<nomStr<<" "<<etape<<" "<<T.size();
+        for (int k=0; T.size()-k>0; k++){
+            for (int i=0; i<taille; i++) {
+                for (int j = 0; j < taille; j++) {
+                    parties<<" "<<T[k][i][j];
+                }
+            }
+        }
+        parties<<endl;
+        return 0;
+    }
+    else return 1;
+}
+
+void game::getNomPartie(){
+    ifstream parties(nomFichier.c_str());
+    string nom;
+    do{
+        parties>>nom;
+        nomsParties.push_back(QString::fromStdString(nom));
+    }while(getline(parties, nom));
+}
+
+bool game::rechPartie(string nom){
+    ifstream parties(nomFichier.c_str());
+    string test;
+    string trash;
+    do{
+        parties>>test;
+    }while(test!=nom && getline(parties, trash));
+    if (test==nom) return true;
+    else return false;
+}
+
+void game::chargePartie(QString nom){
+    ifstream parties(nomFichier.c_str());
+    string nomStr=nom.toStdString();
+    string test;
+    string trash;
+    int longueurT;
+
+    parties>>test;
+    while(test!=nomStr){
+        getline(parties, trash);
+        parties>>test;
+    }
+
+    parties>>etape;
+    parties>>longueurT;
+    for (int k=0; k<longueurT; k++){
+        Damier = new int* [taille];
+        for (int i=0; i<taille; i++){
+            Damier[i]=new int[taille];
+            for (int j=0; j<taille; j++){
+                parties>>Damier[i][j];
+            }
+        }
+        T.push_back(Damier);
+    }
+    gameChanged();
+}
+
+void game::deletePartie(QString nom){
+    ifstream parties(nomFichier.c_str());
+    ofstream temp("Temp.txt");
+    string nomStr=nom.toStdString();
+    string name;
+    string queue;
+
+    parties>>name;
+    while(getline(parties, queue)){
+        if (nomStr!=name){
+            temp<<name<<" "<<queue<<endl;
+        }
+    }
 }
