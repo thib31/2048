@@ -8,16 +8,21 @@ using namespace std;
 
 game::game(QObject *parent) : QObject(parent)
 {
+    // On déclare les premiers paramètres/variables
+    taille=4;
+    // Création des damiers de valeurs et couleurs.
+    for (int i=0; i<16; i++){
+        Damier_valeurs.push_back(QString());
+        Damier_couleurs.push_back(QString::fromStdString(couleur[0]));
+    }
+
     nouvPartie();
 }
 
 void game::nouvPartie()
 {
-    // On (ré-)initialise les tableaux de données
+    // On initialise les tableaux de données
     T.clear();
-    taille=4;
-    Damier_valeurs.clear();
-    Damier_couleurs.clear();
 
     // Création du premier damier, vide
     Damier = new int* [taille];
@@ -31,17 +36,9 @@ void game::nouvPartie()
     // Première case remplie
     Damier[rand()%taille][rand()%taille]=1;
 
-
     // Insertion dans la "pile" du jeu
     T.push_back(Damier);
     etape=0;
-
-    // Initialisation des damiers de valeurs et couleurs, vides pour l'instant.
-    for (int i=0; i<16; i++){
-        Damier_valeurs.push_back(QString());
-        Damier_couleurs.push_back(QString::fromStdString(couleur[0]));
-    }
-
 
     // MaJ initiale du jeu
     gameChanged();
@@ -61,14 +58,19 @@ QStringList game::readVal(){
 }
 
 QStringList game::readCol(){
-    /*
+
     for (int i=0; i<taille; i++) {
         for (int j = 0; j < taille; j++) {
             Damier_couleurs[i*taille+j]=QString::fromStdString(couleur[Damier[i][j]]);
         }
     }
-    */
+
     return Damier_couleurs;
+}
+
+QStringList game::readTemplate(){
+    templateQML.push_back(QString::fromStdString(couleur[0]));
+    return templateQML;
 }
 
 void game::deplacement(int dir_i, int dir_j){
@@ -209,3 +211,4 @@ void game::recupDamier(){
         }
     }
 }
+

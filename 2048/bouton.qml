@@ -10,7 +10,7 @@ Item {
     Rectangle {
         id: rectangle
         anchors.fill: parent
-        color: vueGame.colQML[1]
+        color: vueGame.templateQML[0]
 
         Text {
             id: texteBouton

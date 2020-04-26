@@ -3,17 +3,17 @@ import QtQuick.Window 2.12
 
 Window {
     visible: true
-    width: 640
+    width: 645
     height: 480
     title: qsTr("2048")
     
     Rectangle {
         id: rectangle
-        x: 100
+        x: 210
         y: 66
         width: 225
         height: 225
-        color: "#dddddd"
+        color: "#bbada0"
         focus: true
         Keys.onPressed: {
          switch (event.key) {
@@ -183,14 +183,38 @@ Window {
         x: rectangle.x
         y: rectangle.y + rectangle.height+5
         action.onClicked: vueGame.precedent()
-
-        }
+        valeurText: qsTr("Précédent")
+    }
 
     Bouton {
         id: boutonSuivant
         x: rectangle.x + 115
         y: rectangle.y + rectangle.height+5
         action.onClicked: vueGame.suivant()
+        valeurText: qsTr("Suivant")
+    }
 
+    Bouton {
+        id: boutonNouvPartie
+        x: rectangle.x + rectangle.width + 50
+        y: rectangle.y +5
+        action.onClicked: vueGame.nouvPartie()
+        valeurText: qsTr("Nouvelle Partie")
+    }
+
+    Bouton {
+        id: boutonEnregPartie
+        x: rectangle.x + rectangle.width + 50
+        y: rectangle.y +60
+        action.onClicked: vueGame.nouvPartie()
+        valeurText: qsTr("Enregistrer Partie")
+    }
+
+    Bouton {
+        id: boutonChargerPartie
+        x: rectangle.x + rectangle.width + 50
+        y: rectangle.y +115
+        action.onClicked: vueGame.nouvPartie()
+        valeurText: qsTr("Charger Partie")
     }
 }
