@@ -21,7 +21,8 @@ game::game(QObject *parent) : QObject(parent)
     templateQML.push_back(QString::fromStdString("true"));              // Permet de réinitialiser l'état du focus lorsque celui-ci se désactive (enregistrement ou chargement de partie)
     templateQML.push_back(QString::fromStdString("Tahoma"));            // Police par défaut
     templateQML.push_back(QString::fromStdString("file:///"+storagePath+"/Images/Cat.jpg")); // Image affichée à la défaite
-    valPerdu=false;                                                     // Définit l'état de la fenêtre "Perdu"
+    templateQML.push_back(QString::fromStdString("file:///"+storagePath+"/Images/Win.jpg")); // Image affichée à la victoire
+    valFin.append(false); valFin.append(false); valFin.append(false);   // Définit l'état des fenetres de fin de partie : affiche perdu; affiche gagné; partie déjà gagnée
 
     // Création des damiers de valeurs et couleurs.
     for (int i=0; i<16; i++){
@@ -91,8 +92,8 @@ QStringList game::readParties(){
     return nomsParties;
 }
 
-bool game::readPerdu(){
-    return valPerdu;
+QList<bool> game::readFin(){
+    return valFin;
 }
 
 ///////////////// Section 2 : Algorithme du jeu /////////////////
@@ -134,7 +135,7 @@ void game::deplacement(int dir_i, int dir_j){       // Actionnée lors d'un mouv
             }
         }
         if (cptCaseVide==0){                            // Cas où toutes les colonnes sont prises : plus d'espace libre, la partie est perdue
-            valPerdu=true;
+            valFin[0]=true;
         }
         else{
             Damier[fin-dir_i][tabCaseVide[rand()%cptCaseVide]]=1;   // On insère un 2 de manière aléatoire
@@ -157,7 +158,7 @@ void game::deplacement(int dir_i, int dir_j){       // Actionnée lors d'un mouv
             }
         }
         if (cptCaseVide==0){
-            // Partie perdue
+            valFin[0]=true;
         }
         else{
             Damier[tabCaseVide[rand()%cptCaseVide]][fin-dir_j]=1;
@@ -206,6 +207,10 @@ void game::fusionne(int *atraiter){
             atraiter[k]++;                  // On incrémente l'exposant du 1er,
             atraiter[k+1]=0;                // On passe le second a 0,
             k+=2;                           // Et on enjambe le 0 ainsi créé.
+            if (atraiter[k]==11 && valFin[2]==false){
+                valFin[1]=true;             // On affiche la fenetre de victoire
+                valFin[2]=true;             // On enregistre que la partie est déjà gagnée, pour ne pas déranger dans les mouvements ultérieurs
+            }
         }                                   // Dans le jeu du 2048, un chiffre peut se combiner au plus 1 fois par coup joué
 
         else k++;                           // Sinon, on passe à la case suivante.
@@ -238,8 +243,8 @@ void game::recupDamier(){                   // La structure utilisée pose un pr
     }
 }
 
-void game::closePerdu(){
-    valPerdu=false;
+void game::closeFin(int i){
+    valFin[i]=false;
     gameChanged();
 }
 

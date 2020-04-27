@@ -132,13 +132,12 @@ Window {
 
     Rectangle{
         id:rectanglePerdu
-        visible: vueGame.valPerdu
+        visible: vueGame.valFin[0]
         anchors.fill: parent
         color: vueGame.templateQML[0]
 
         Image {
             id: image
-            width: 240
             height: 240
             y:15
             fillMode: Image.PreserveAspectFit
@@ -161,9 +160,46 @@ Window {
             id:boutonPerdu
             y:300
             valeurText: "Retour"
-            action.onClicked: vueGame.closePerdu()
+            action.onClicked: vueGame.closeFin(0)
+            anchors.horizontalCenter: parent.horizontalCenter
+        }
+    }
+
+    Rectangle{
+        id:rectangleGagne
+        visible: vueGame.valFin[1]
+        anchors.fill: parent
+        color: vueGame.templateQML[0]
+        focus: true
+
+        Image {
+            id: image2
+            height: 240
+            y:15
+            fillMode: Image.PreserveAspectFit
+            source: vueGame.templateQML[8]
             anchors.horizontalCenter: parent.horizontalCenter
         }
 
+        Text {
+            id: textGagne
+            y:260
+            width: parent.width
+            horizontalAlignment: Text.AlignHCenter
+            text: qsTr("Bravo, vous avez gagné !!\n Vous pouvez continuer votre partie, ou en commencer une nouvelle ;)")
+            font.pointSize: 10
+            font.family: vueGame.templateQML[6]
+            anchors.horizontalCenter: parent.horizontalCenter
+        }
+
+        Bouton{
+            id:boutonGagne
+            y:300
+            valeurText: "Continuer"
+            action.onClicked: {
+                vueGame.closeFin(1);
+            }
+            anchors.horizontalCenter: parent.horizontalCenter
+        }
     }
 }
