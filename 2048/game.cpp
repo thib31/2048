@@ -21,7 +21,7 @@ game::game(QObject *parent) : QObject(parent)
     templateQML.push_back(QString::fromStdString("true"));              // Permet de réinitialiser l'état du focus lorsque celui-ci se désactive (enregistrement ou chargement de partie)
     templateQML.push_back(QString::fromStdString("Tahoma"));            // Police par défaut
     templateQML.push_back(QString::fromStdString("file:///"+storagePath+"/Images/Cat.jpg")); // Image affichée à la défaite
-    valPerdu=true;
+    valPerdu=false;                                                     // Définit l'état de la fenêtre "Perdu"
 
     // Création des damiers de valeurs et couleurs.
     for (int i=0; i<16; i++){

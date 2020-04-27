@@ -42,7 +42,6 @@ Item {
                 couleur: vueGame.templateQML[4]
                 action.onClicked: {
                     vueGame.changePolice(police[choixPolice]);
-                    console.log(vueGame.templateQML[6])
                     fenetre.visible=false
                 }
             }
