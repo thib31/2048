@@ -1,4 +1,6 @@
 import QtQuick 2.0
+// Petite différence par rapport à AfficheListe, la fenêtre de confirmation, lorsque le nom de partie est déjà utilisé.
+// C'est elle qui fait appel au mode "écrasementé de la fonction enregistrePartie.
 
 Item {
     property var taillePolice: 12

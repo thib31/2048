@@ -2,6 +2,11 @@ import QtQuick 2.10
 import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.2
 
+// Fenetre de choix de la police : j'en ai mmis 3 au choix, le code est totalement transposable si on en veut plus.
+// J'ai utilisé des CheckBox. Pour s'assurer qu'une seule est selectionnée, chacune désactive les autres.
+// Dans le cas où l'utilisateur ne sélectionne rien, la valeur de "choixPolice" est modifiée, mais on ne fait pas de changement de police
+// Tout comportement d'erreur est donc écarté.
+
 Item {
     property var police: ["Tahoma","Times New Roman","Courier"]
     property var choixPolice: 0
@@ -41,7 +46,9 @@ Item {
                 valeurText: qsTr("Valider")
                 couleur: vueGame.templateQML[4]
                 action.onClicked: {
-                    vueGame.changePolice(police[choixPolice]);
+                    if (checkBox0.checked||checkBox1.checked||checkBox2.checked){
+                        vueGame.changePolice(police[choixPolice]);
+                    }
                     fenetre.visible=false
                 }
             }
@@ -74,6 +81,7 @@ Item {
 
                     CheckBox {
                         id: checkBox0
+                        height: parent.height
                         onCheckedChanged: {
                             if (checked){
                                 checkBox1.checkedState=Qt.Unchecked
@@ -86,6 +94,7 @@ Item {
                     Text {
                         id: element
                         x: checkBox0.width
+                        height: parent.height
                         verticalAlignment: Text.AlignVCenter
                         text: qsTr("Tahoma")
                         font.family: "Tahoma"
@@ -104,6 +113,7 @@ Item {
 
                     CheckBox {
                         id: checkBox1
+                        height: parent.height
                         onCheckedChanged: {
                             if (checked){
                                 checkBox0.checkedState=Qt.Unchecked
@@ -116,6 +126,7 @@ Item {
                     Text {
                         id: element1
                         x: checkBox1.width
+                        height: parent.height
                         text: qsTr("Times")
                         font.family: "Times New Roman"
                         verticalAlignment: Text.AlignVCenter
@@ -131,6 +142,7 @@ Item {
 
                     CheckBox {
                         id: checkBox2
+                        height: parent.height
                         onCheckedChanged: {
                             if (checked){
                                 checkBox0.checkedState=Qt.Unchecked
@@ -143,6 +155,7 @@ Item {
                     Text {
                         id: element2
                         x: checkBox2.width
+                        height: parent.height
                         text: qsTr("Courier")
                         font.family: "Courier"
                         verticalAlignment: Text.AlignVCenter

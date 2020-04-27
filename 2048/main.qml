@@ -1,6 +1,12 @@
 import QtQuick 2.12
 import QtQuick.Window 2.12
 
+// Ici se regroupent les éléments : damier, boutons, menus.
+// Dans le FocusScope, j'ai mis le paramètre focus dans un élément du C++ car il se désactivait lors de l'utilisation des fonctions enregistrer, charger ou supprimer.
+// Je n'ai pas compris cette erreur (sans doute le focus attribué à un autre), mais cela permet de le remettre dès que l'écran change.
+// Les 2 fenêtres de fin de partie (perdue ou gagnée) sont dans le main parce que le code ne gagnait pas en lisibilité en les mettant à part.
+
+
 Window {
     visible: true
     width: 645

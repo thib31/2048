@@ -1,4 +1,9 @@
 import QtQuick 2.0
+// Tout simplement un rectangle avec 16 cases.
+// Je n'ai pas trouvé de moyen itératif pour le générer.
+// numero permet de ne pas préciser à chaque fois qu'on implémente un alias
+// (par exemple si on veut faire varier la couleur de police en même temps que celle du fond)
+
 
 Item {
     width: 225

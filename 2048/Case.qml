@@ -1,4 +1,8 @@
 import QtQuick 2.0
+// De même que pour le bouton, j'ai défini un seul type de case.
+// Les propriétés sont le texte et la couleur du fond.
+// L'int numero permet de définir plus rapidement les controles, avec le numero associé à la case.
+
 
 Item {
     property alias valeurText: valeur.text
