@@ -2,6 +2,11 @@ import QtQuick 2.0
 import QtQuick.Controls 1.4
 
 Item {
+    property alias titre: titre.text
+    property alias textebouton: boutonValid.valeurText
+    property alias bouton: boutonValid.action
+    property alias ligne: table.currentRow
+    property alias affiche: fenetreChargement.visible
     id:fenetreChargement
     width: 645
     height: 480
@@ -20,12 +25,11 @@ Item {
             color: vueGame.templateQML[0]
 
             Text {
-                id: element
+                id: titre
                 x: 0
                 y:20
                 width: parent.width
                 horizontalAlignment: Text.AlignHCenter
-                text: qsTr("Text")
                 font.pixelSize: 12
             }
 
@@ -50,21 +54,20 @@ Item {
             }
 
             Bouton {
-                id: boutonCharg
+                id: boutonValid
                 x: parent.width/4-width/2
                 y: 192
-                valeurText: qsTr("Charger")
-                couleur: vueGame.templateQML[4]
+                couleur: vueGame.templateQML[4]/*
                 action.onClicked: {
                     vueGame.chargePartie(vueGame.partiesQML[table.currentRow])
                     fenetreChargement.visible=false
-                }
+                }*/
             }
 
             Bouton {
                 id: boutonAnnulCha
                 x: parent.width*3/4-width/2
-                y: boutonCharg.y
+                y: boutonValid.y
                 valeurText: qsTr("Annuler")
                 action.onClicked: fenetreChargement.visible=false
             }

@@ -64,6 +64,7 @@ Item {
                 x: parent.width/4-width/2
                 y: 192
                 valeurText: qsTr("Enregistrer")
+                couleur: vueGame.templateQML[4]
                 action.onClicked: {
                     if (vueGame.enregistrePartie(textInput.text,false)===0){
                         fenetre.visible=false

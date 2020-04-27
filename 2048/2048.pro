@@ -34,7 +34,8 @@ HEADERS += \
     game.h
 
 DISTFILES += \
+    AfficheListe.qml \
     Bouton.qml \
-    Charger.qml \
+    Damier.qml \
     Enregistrer.qml \
     case.qml

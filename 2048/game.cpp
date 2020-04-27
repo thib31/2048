@@ -17,7 +17,7 @@ game::game(QObject *parent) : QObject(parent)
     templateQML.push_back(QString::fromStdString("#80cfceca"));         // Couleur de masquage (pour les fenêtres Enregistrer et Charger
     templateQML.push_back(QString::fromStdString("#bbada0"));           // Couleurs de la grille
     templateQML.push_back(QString::fromStdString(couleur[0]));          // Couleur des boutons
-    templateQML.push_back(QString::fromStdString("#f65e39"));           // Couleur boutons (variante rouge)
+    templateQML.push_back(QString::fromStdString(couleur[5]));           // Couleur boutons (variante rouge)
     templateQML.push_back(QString::fromStdString("true"));              // Permet de réinitialiser l'état du focus lorsque celui-ci se désactive (enregistrement ou chargement de partie)
 
     // Création des damiers de valeurs et couleurs.
@@ -409,4 +409,5 @@ void game::deletePartie(QString nom){
     temp.close();
     remove(nomFichier.c_str());
     rename(tempFichier.c_str(),nomFichier.c_str());
+    listePartieChanged();    // Permet la mise à jour de la liste quand on supprime un enregistrement
 }

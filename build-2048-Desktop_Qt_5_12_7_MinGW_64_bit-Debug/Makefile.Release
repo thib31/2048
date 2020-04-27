@@ -55,8 +55,9 @@ OBJECTS       = release/game.o \
 		release/qrc_qml.o \
 		release/moc_game.o
 
-DIST          = Bouton.qml \
-		Charger.qml \
+DIST          = AfficheListe.qml \
+		Bouton.qml \
+		Damier.qml \
 		Enregistrer.qml \
 		case.qml ..\2048\game.h ..\2048\game.cpp \
 		..\2048\main.cpp
@@ -106,8 +107,9 @@ release/qrc_qml.cpp: ../2048/qml.qrc \
 		C:/Qt/5.12.7/mingw73_64/bin/rcc.exe \
 		../2048/Case.qml \
 		../2048/Enregistrer.qml \
+		../2048/AfficheListe.qml \
 		../2048/Bouton.qml \
-		../2048/Charger.qml \
+		../2048/Damier.qml \
 		../2048/main.qml
 	C:\Qt\5.12.7\mingw73_64\bin\rcc.exe -name qml ..\2048\qml.qrc -o release\qrc_qml.cpp
 
