@@ -20,6 +20,8 @@ Item {
             anchors.fill: parent
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
+            font.family:vueGame.templateQML[6]
+            wrapMode: Text.Wrap
         }
 
         MouseArea {

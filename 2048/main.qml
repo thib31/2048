@@ -87,6 +87,14 @@ Window {
         valeurText: qsTr("Supprimer Partie")
     }
 
+    Bouton {
+        id: boutonPolice
+        x: rectangle.x -50-110
+        y: rectangle.y
+        action.onClicked: police.visible=true
+        valeurText: qsTr("Changer Police")
+    }
+
     Enregistrer {
         id: enregistrer
         anchors.fill: parent
@@ -115,5 +123,47 @@ Window {
             vueGame.deletePartie(vueGame.partiesQML[ligne])
             affiche=false
         }
+    }
+
+    Police {
+        id: police
+        anchors.fill: parent
+    }
+
+    Rectangle{
+        id:rectanglePerdu
+        visible: vueGame.valPerdu
+        anchors.fill: parent
+        color: vueGame.templateQML[0]
+
+        Image {
+            id: image
+            width: 240
+            height: 240
+            y:15
+            fillMode: Image.PreserveAspectFit
+            source: vueGame.templateQML[7]
+            anchors.horizontalCenter: parent.horizontalCenter
+        }
+
+        Text {
+            id: textPerdu
+            y:260
+            width: parent.width
+            horizontalAlignment: Text.AlignHCenter
+            text: qsTr("Oh non ! Vous avez perdu...\n Vous pouvez revenir en arrière, ou commencer une nouvelle partie ;)")
+            font.pointSize: 10
+            font.family: vueGame.templateQML[6]
+            anchors.horizontalCenter: parent.horizontalCenter
+        }
+
+        Bouton{
+            id:boutonPerdu
+            y:300
+            valeurText: "Retour"
+            action.onClicked: vueGame.closePerdu()
+            anchors.horizontalCenter: parent.horizontalCenter
+        }
+
     }
 }

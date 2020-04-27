@@ -31,6 +31,7 @@ Item {
                 width: parent.width
                 horizontalAlignment: Text.AlignHCenter
                 font.pixelSize: 12
+                font.family:vueGame.templateQML[6]
             }
 
 

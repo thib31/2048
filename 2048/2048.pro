@@ -38,4 +38,5 @@ DISTFILES += \
     Bouton.qml \
     Damier.qml \
     Enregistrer.qml \
+    Police.qml \
     case.qml

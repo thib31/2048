@@ -17,15 +17,17 @@ game::game(QObject *parent) : QObject(parent)
     templateQML.push_back(QString::fromStdString("#80cfceca"));         // Couleur de masquage (pour les fenêtres Enregistrer et Charger
     templateQML.push_back(QString::fromStdString("#bbada0"));           // Couleurs de la grille
     templateQML.push_back(QString::fromStdString(couleur[0]));          // Couleur des boutons
-    templateQML.push_back(QString::fromStdString(couleur[5]));           // Couleur boutons (variante rouge)
+    templateQML.push_back(QString::fromStdString(couleur[5]));          // Couleur boutons (variante rouge)
     templateQML.push_back(QString::fromStdString("true"));              // Permet de réinitialiser l'état du focus lorsque celui-ci se désactive (enregistrement ou chargement de partie)
+    templateQML.push_back(QString::fromStdString("Tahoma"));            // Police par défaut
+    templateQML.push_back(QString::fromStdString("file:///"+storagePath+"/Images/Cat.jpg")); // Image affichée à la défaite
+    valPerdu=true;
 
     // Création des damiers de valeurs et couleurs.
     for (int i=0; i<16; i++){
         Damier_valeurs.push_back(QString());
         Damier_couleurs.push_back(QString::fromStdString(couleur[0]));
     }
-
     nouvPartie();
 }
 
@@ -89,6 +91,9 @@ QStringList game::readParties(){
     return nomsParties;
 }
 
+bool game::readPerdu(){
+    return valPerdu;
+}
 
 ///////////////// Section 2 : Algorithme du jeu /////////////////
 
@@ -129,7 +134,7 @@ void game::deplacement(int dir_i, int dir_j){       // Actionnée lors d'un mouv
             }
         }
         if (cptCaseVide==0){                            // Cas où toutes les colonnes sont prises : plus d'espace libre, la partie est perdue
-            // Partie perdue
+            valPerdu=true;
         }
         else{
             Damier[fin-dir_i][tabCaseVide[rand()%cptCaseVide]]=1;   // On insère un 2 de manière aléatoire
@@ -231,6 +236,11 @@ void game::recupDamier(){                   // La structure utilisée pose un pr
             Damier[i][j] = T[etape][i][j];
         }
     }
+}
+
+void game::closePerdu(){
+    valPerdu=false;
+    gameChanged();
 }
 
 ///////////////// Section 3 : Gestion de l'enregistrement des parties /////////////////
@@ -410,4 +420,11 @@ void game::deletePartie(QString nom){
     remove(nomFichier.c_str());
     rename(tempFichier.c_str(),nomFichier.c_str());
     listePartieChanged();    // Permet la mise à jour de la liste quand on supprime un enregistrement
+}
+
+
+///////////////// Partie 4 : Modification de l'apparence /////////////////
+void game::changePolice(QString police){
+    templateQML[6]=police;
+    gameChanged();
 }

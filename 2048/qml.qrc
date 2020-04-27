@@ -6,5 +6,6 @@
         <file>Enregistrer.qml</file>
         <file>Damier.qml</file>
         <file>AfficheListe.qml</file>
+        <file>Police.qml</file>
     </qresource>
 </RCC>

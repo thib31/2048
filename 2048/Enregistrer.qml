@@ -1,6 +1,8 @@
 import QtQuick 2.0
 
 Item {
+    property var taillePolice: 12
+
     id:fenetre
     //height: 300
     //width: 645
@@ -27,6 +29,7 @@ Item {
                 text: qsTr("Enregistrer la partie")
                 font.pixelSize: 12
                 horizontalAlignment: Text.AlignHCenter
+                font.family:vueGame.templateQML[6]
             }
 
             Text {
@@ -37,6 +40,7 @@ Item {
                 verticalAlignment: Text.AlignVCenter
                 text: qsTr("Nom :")
                 font.pixelSize: 12
+                font.family:vueGame.templateQML[6]
             }
 
             Rectangle {
@@ -53,9 +57,9 @@ Item {
                     id: textInput
                     anchors.fill: parent
                     anchors.margins: 4
-                    text: "Nom"
                     font.pixelSize: 12
                     verticalAlignment: Text.AlignVCenter
+                    font.family:vueGame.templateQML[6]
                 }
             }
 
@@ -107,6 +111,7 @@ Item {
                     text: qsTr("Un fichier portant ce nom existe déjà.\n Voulez-vous continuer ?")
                     font.bold: true
                     font.pixelSize: 14
+                    font.family:vueGame.templateQML[6]
                     horizontalAlignment: Text.AlignHCenter
                 }
                 Bouton {

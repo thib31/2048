@@ -15,7 +15,7 @@ Item {
     Text {
         id: valeur
         anchors.fill: parent
-        font.family: "Tahoma"
+        font.family:vueGame.templateQML[6]
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
         font.pixelSize: 24

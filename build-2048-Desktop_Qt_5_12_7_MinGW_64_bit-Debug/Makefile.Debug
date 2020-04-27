@@ -59,6 +59,7 @@ DIST          = AfficheListe.qml \
 		Bouton.qml \
 		Damier.qml \
 		Enregistrer.qml \
+		Police.qml \
 		case.qml ..\2048\game.h ..\2048\game.cpp \
 		..\2048\main.cpp
 QMAKE_TARGET  = 2048
@@ -110,6 +111,7 @@ debug/qrc_qml.cpp: ../2048/qml.qrc \
 		../2048/AfficheListe.qml \
 		../2048/Bouton.qml \
 		../2048/Damier.qml \
+		../2048/Police.qml \
 		../2048/main.qml
 	C:\Qt\5.12.7\mingw73_64\bin\rcc.exe -name qml ..\2048\qml.qrc -o debug\qrc_qml.cpp
 

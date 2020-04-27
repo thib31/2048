@@ -17,11 +17,13 @@ public:
     Q_PROPERTY(QStringList colQML READ readCol NOTIFY gameChanged)
     Q_PROPERTY(QStringList templateQML READ readTemplate NOTIFY gameChanged)
     Q_PROPERTY(QStringList partiesQML READ readParties NOTIFY listePartieChanged)
+    Q_PROPERTY(bool valPerdu READ readPerdu NOTIFY gameChanged)
 
     QStringList readVal();                          // Valeurs des cases
     QStringList readCol();                          // Couleurs des cases
     QStringList readTemplate();                     // Informations sur le template : détaillées dans game.cpp
     QStringList readParties();                      // Liste des parties sauvegardées
+    bool readPerdu();
 
     Q_INVOKABLE void precedent();                   // Fonction permettant de revenir à l'étape précédente
     Q_INVOKABLE void suivant();                     // Pour passer à l'étape suivante
@@ -30,6 +32,7 @@ public:
     void condense(int atraiter[]);                  // "Plaque" les éléments sur le bord
     void fusionne(int atraiter[]);                  // Effectue les combinaisons possibles
     void recupDamier();                             // Crée une copie du damier, pour garder l'ancien en mémoire
+    Q_INVOKABLE void closePerdu();                  // Referme la fenêtre qui s'affiche lors que la partie est perdue
 
     // Fonctions de gestion des enregistrements
     Q_INVOKABLE int enregistrePartie(QString nom, bool force);
@@ -38,6 +41,8 @@ public:
     void getNomPartie();                            // Crée la liste des parties enregistrées
     bool rechPartie(string nom);                    // Recherche l'existence d'un doublon
 
+    // Choix de la police
+    Q_INVOKABLE void changePolice(QString police);
 
 
 
@@ -51,10 +56,12 @@ private:
     QStringList Damier_couleurs;                // Damier envoyé à l'interface QML, contenant les couleurs des cases
     QStringList templateQML;                    // Damier envoyé à l'interface QML, contenant les informations du template
     QStringList nomsParties;                    // Damier envoyé à l'interface QML, contenant les noms des parties enregistrées
+    bool valPerdu;
 
     // Répertoire des fichiers txt
     string const nomFichier=("C:/Users/thilv/Desktop/2048/2048/Fichiers/partiesEnregistrees.txt");      // Fichier de stockage des parties
     string const tempFichier=("C:/Users/thilv/Desktop/2048/2048/Fichiers/Temp.txt");                    // Fichier provisoire, utilisé pour modifier le fichier précédent
+    string storagePath=("C:/Users/thilv/Desktop/2048/2048");
 
 
 
