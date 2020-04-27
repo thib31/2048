@@ -12,12 +12,14 @@ game::game(QObject *parent) : QObject(parent)
 {
     // On déclare les premiers paramètres/variables
     taille=4;
-    templateQML.push_back(QString::fromStdString("#fbf8ef"));
-    templateQML.push_back(QString::fromStdString("#80cfceca"));
-    templateQML.push_back(QString::fromStdString("#bbada0"));
-    templateQML.push_back(QString::fromStdString(couleur[0]));
-    templateQML.push_back(QString::fromStdString("#f65e39"));
-    templateQML.push_back(QString::fromStdString("true"));
+    couleur = new string[16]{"#d6cdc4","#eee4da","#ece0c8","#f2b179","#f59563","#f57c5f","#f65e39","#edce71","#edcb61","#ecc850","#ecc850","#ecc850","#ecc850","#ecc850","#ecc850","#ecc850"};
+    templateQML.push_back(QString::fromStdString("#fbf8ef"));           // Couleur de l'arrière plan
+    templateQML.push_back(QString::fromStdString("#80cfceca"));         // Couleur de masquage (pour les fenêtres Enregistrer et Charger
+    templateQML.push_back(QString::fromStdString("#bbada0"));           // Couleurs de la grille
+    templateQML.push_back(QString::fromStdString(couleur[0]));          // Couleur des boutons
+    templateQML.push_back(QString::fromStdString("#f65e39"));           // Couleur boutons (variante rouge)
+    templateQML.push_back(QString::fromStdString("true"));              // Permet de réinitialiser l'état du focus lorsque celui-ci se désactive (enregistrement ou chargement de partie)
+
     // Création des damiers de valeurs et couleurs.
     for (int i=0; i<16; i++){
         Damier_valeurs.push_back(QString());
@@ -29,7 +31,7 @@ game::game(QObject *parent) : QObject(parent)
 
 void game::nouvPartie()
 {
-    // On initialise les tableaux de données
+    // On réinitialise les tableaux de données
     T.clear();
 
     // Création du premier damier, vide
@@ -44,7 +46,7 @@ void game::nouvPartie()
     // Première case remplie
     Damier[rand()%taille][rand()%taille]=1;
 
-    // Insertion dans la "pile" du jeu
+    // Insertion du damier dans la "pile" du jeu
     T.push_back(Damier);
     etape=0;
 
@@ -53,12 +55,13 @@ void game::nouvPartie()
     listePartieChanged();
 }
 
+///////////////// Section 1 : Mise à jours d'informations pour l'interface QML /////////////////
 
-QStringList game::readVal(){
+QStringList game::readVal(){                                // Valeurs du damier : on récupère les exposants, on fait le calcul, et on transforme en Qstring
     for (int i=0; i<taille; i++) {
         for (int j = 0; j < taille; j++) {
             if (Damier[i][j]==0)
-            {Damier_valeurs[i*taille+j]=QString();}                         // Quand la case est vide, on n'affiche pas le nombre "0"
+            {Damier_valeurs[i*taille+j]=QString();}         // Quand la case est vide, on n'affiche pas le nombre "0"
             else
             {Damier_valeurs[i*taille+j]=QString::number(pow(2,Damier[i][j]));}     // Sinon on affiche la valeur concernée
         }
@@ -66,14 +69,12 @@ QStringList game::readVal(){
     return Damier_valeurs;
 }
 
-QStringList game::readCol(){
-
+QStringList game::readCol(){                                // Couleurs du damier
     for (int i=0; i<taille; i++) {
         for (int j = 0; j < taille; j++) {
-            Damier_couleurs[i*taille+j]=QString::fromStdString(couleur[Damier[i][j]]);
+            Damier_couleurs[i*taille+j]=QString::fromStdString(couleur[Damier[i][j]]); // On récupère dans "couleur" celle qui correspond
         }
     }
-
     return Damier_couleurs;
 }
 
@@ -82,19 +83,22 @@ QStringList game::readTemplate(){
 }
 
 QStringList game::readParties(){
-    nomsParties.clear();
-    getNomPartie();
-    nomsParties.sort();
+    nomsParties.clear();    // Nécessaire si on effectue une mise à jour
+    getNomPartie();         // On remplit la liste
+    nomsParties.sort();     // Et on la trie par ordre alphabétique, pour plus de lisibilité
     return nomsParties;
 }
 
-void game::deplacement(int dir_i, int dir_j){
-    while (T.size()-etape>1){
-        T.pop_back();
+
+///////////////// Section 2 : Algorithme du jeu /////////////////
+
+void game::deplacement(int dir_i, int dir_j){       // Actionnée lors d'un mouvement, avec l'un des deux entiers qui vaut +/-1, l'autre 0
+    while (T.size()-etape>1){       // On supprime les configurations "suivantes" si elles existent
+        T.pop_back();               // (si la touche Précédent a été utilisée)
     }
     recupDamier();
-    int debut; int fin;
-    if (dir_i+dir_j==1){
+    int debut; int fin;             // Dans la suite, je vais parcourir soit en ligne, soit en colonne, dans le sens opposé au déplacement.
+    if (dir_i+dir_j==1){            // Ces entiers correspondent au 1er et dernier élément à traiter.
         debut=0;
         fin=taille;
     }
@@ -107,34 +111,35 @@ void game::deplacement(int dir_i, int dir_j){
     int cpt(0);
     int cptCaseVide(0);
     int tabCaseVide[4];
+
     if (dir_j==0){          // 1er cas : déplacement vertical. On traite les colonnes l'une après l'autre.
         for (int j=0; j<taille; j++){
             cpt=0;
             for (int i=debut; i!=fin; i+=dir_i){
                 atraiter[cpt]=Damier[i][j];             // On stocke la ligne ou colonne sous forme de liste, pour utiliser une seule fonction de traitement
-                indices[cpt]=i;
+                indices[cpt]=i;                         // Et dans l'ordre opposé au déplacement
                 cpt++;
             }
-            traiteListe(atraiter);
-            for (int k=0; k<taille; k++)
+            traiteListe(atraiter);                      // On applique la transformation
+            for (int k=0; k<taille; k++)                // Et on met les valeurs finales dans Damier
                 Damier[indices[k]][j]=atraiter[k];
-            if (atraiter[taille-1]==0){
+            if (atraiter[taille-1]==0){                 // On indique que la dernière case de la colonne est libre
                 tabCaseVide[cptCaseVide]=j;
                 cptCaseVide++;
             }
         }
-        if (cptCaseVide==0){
+        if (cptCaseVide==0){                            // Cas où toutes les colonnes sont prises : plus d'espace libre, la partie est perdue
             // Partie perdue
         }
         else{
-            Damier[fin-dir_i][tabCaseVide[rand()%cptCaseVide]]=1;
+            Damier[fin-dir_i][tabCaseVide[rand()%cptCaseVide]]=1;   // On insère un 2 de manière aléatoire
         }
     }
-    else{          // 2nd cas : déplacement horizontal. On traite les lignes l'une après l'autre.
+    else{          // 2nd cas : déplacement horizontal. On traite les lignes l'une après l'autre. Même chose, mais transposée.
         for (int i=0; i<taille; i++){
             cpt=0;
             for (int j=debut; j!=fin; j+=dir_j){
-                atraiter[cpt]=Damier[i][j];             // On stocke la ligne ou colonne sous forme de liste, pour utiliser une seule fonction de traitement
+                atraiter[cpt]=Damier[i][j];             // On stocke la ligne de la même manière
                 indices[cpt]=j;
                 cpt++;
             }
@@ -153,33 +158,33 @@ void game::deplacement(int dir_i, int dir_j){
             Damier[tabCaseVide[rand()%cptCaseVide]][fin-dir_j]=1;
         }
     }
-    T.push_back(Damier);
-    etape++;
-    gameChanged();
+    T.push_back(Damier);                    // On rajoute la dernière configuration,
+    etape++;                                // incrémente le numéro de l'étape en cours,
+    gameChanged();                          // et met à jour l'interface QML
 }
 
 void game::traiteListe(int *atraiter){
-    condense(atraiter);
-    fusionne(atraiter);
-    condense(atraiter);
+    condense(atraiter);                     // On plaque les cases (non nulles) contre un bord,
+    fusionne(atraiter);                     // On effectue les fusions possibles,
+    condense(atraiter);                     // Et on replaque, pour compenser les eventuels trous laissés
 }
 
 void game::condense(int *atraiter){
     int indice_premier_zero(taille);        // Sert à la fois de paramètre de detection et de "marque page"
     int k(0);
     while(k<taille){
-        if (atraiter[k]==0){
-            if (indice_premier_zero>k){     // Premier zéro que l'on rencontre
+        if (atraiter[k]==0){                // On note l'indice du premier 0 rencontré
+            if (indice_premier_zero>k){
                 indice_premier_zero=k;
             }
             k++;
         }
-        else{
-            if (indice_premier_zero<k){     // On est déjà passés sur une case vide
+        else{                               // Dès que l'on rencontre une case pleine,
+            if (indice_premier_zero<k){     // Si on est déjà passés sur un 0, on la rapproche
                 atraiter[indice_premier_zero]=atraiter[k];
                 atraiter[k]=0;
                 k=indice_premier_zero+1;
-                indice_premier_zero=taille; // On réinitialise le paramètre de détection
+                indice_premier_zero=taille; // On réinitialise le paramètre de détection, et on reprend à la case suivante
             }
             else k++;                       // Pas de case vide disponible
         }
@@ -189,27 +194,28 @@ void game::condense(int *atraiter){
 void game::fusionne(int *atraiter){
     int k(0);
     while (k<taille-1){
-        if (atraiter[k]==0){
-            k=taille;
+        if (atraiter[k]==0){                // Si l'on rencontre un 0, alors la suite de la liste est vide (fonction condense)
+            k=taille;                       // Donc on s'arrête
         }
-        else if (atraiter[k]==atraiter[k+1]){
-            atraiter[k]++;
-            atraiter[k+1]=0;
-            k+=2;
-        }
-        else k++;
+        else if (atraiter[k]==atraiter[k+1]){  // Si on peut réaliser la fusion,
+            atraiter[k]++;                  // On incrémente l'exposant du 1er,
+            atraiter[k+1]=0;                // On passe le second a 0,
+            k+=2;                           // Et on enjambe le 0 ainsi créé.
+        }                                   // Dans le jeu du 2048, un chiffre peut se combiner au plus 1 fois par coup joué
+
+        else k++;                           // Sinon, on passe à la case suivante.
     }
 }
 
-void game::precedent(){
+void game::precedent(){                     // Retour à l'étape précédente : si possible,
     if (etape>0){
-        etape--;
-        Damier=T[etape];
-        gameChanged();
+        etape--;                            // On décrémente le compteur,
+        Damier=T[etape];                    // Change le damier,
+        gameChanged();                      // Et met à jour l'interface QML
     }
 }
 
-void game::suivant(){
+void game::suivant(){                       // Idem dans l'autre sens
     if (1<T.size()-etape){
         etape++;
         Damier=T[etape];
@@ -217,9 +223,9 @@ void game::suivant(){
     }
 }
 
-void game::recupDamier(){
-        Damier = new int* [taille];
-    for (int i=0; i<taille; i++) {
+void game::recupDamier(){                   // La structure utilisée pose un problème : on ne peut pas modifier
+        Damier = new int* [taille];         // le même damier tout au long de la partie.
+    for (int i=0; i<taille; i++) {          // Il faut donc créer une copie, à chaque nouveau déplacement
         Damier[i] = new int[taille];
         for (int j = 0; j < taille; j++) {
             Damier[i][j] = T[etape][i][j];
@@ -227,14 +233,29 @@ void game::recupDamier(){
     }
 }
 
-int game::enregistrePartie(QString nom, bool force){
-    if (force) deletePartie(nom);
+///////////////// Section 3 : Gestion de l'enregistrement des parties /////////////////
 
-    ofstream parties(nomFichier.c_str(), ios::app);
+int game::enregistrePartie(QString nom, bool force){
+    // J'ai créé une seule fonction d'enregistrement pour 2 cas :
+    //      - Création d'un nouvel enregistrement       (force = false)
+    //      - Ecrasement d'un ancien.                   (force = true)
+    // Cela est géré par l'interface graphique, fichier "Enregistrer.qml"
+    // La structure du fichier est faite avec 1 ligne par enregistrement, et décomposée ainsi :
+    //      - Le nb de mots qui composent le nom
+    //      - Le nom (qui peut contenir des espaces)
+    //      - L'étape à laquelle en est le jeu
+    //      - La taille de T
+    //      - T, "linéarisé" : parcouru par des boucles for, tous les éléments stockés les uns après les
+    //          autres, et séparés par des espaces.
+    // On utilise l'espace comme séparateur pour se servir du module ifstream.
+
+    if (force) deletePartie(nom);           // Si l'on force l'enregistrement, on supprime l'ancien fichier
+
+    ofstream parties(nomFichier.c_str(), ios::app); // On ouvre le fichier en écriture, à la fin
     string nomStr=nom.toStdString();
 
-    if (force|| !rechPartie(nomStr)){
-        parties<<count(nomStr.begin(), nomStr.end(), ' ')+1<<" ";
+    if (force|| !rechPartie(nomStr)){       // Distinction : soit on écrase, soit il n'y a pas d'enregistrement du même nom
+        parties<<count(nomStr.begin(), nomStr.end(), ' ')+1<<" ";   // Pour les explications, tout est au début de la fonction.
         parties<<nomStr<<" "<<etape<<" "<<T.size();
         for (int k=0; T.size()-k>0; k++){
             for (int i=0; i<taille; i++) {
@@ -245,24 +266,25 @@ int game::enregistrePartie(QString nom, bool force){
         }
         parties<<endl;
         listePartieChanged();
-        return 0;
+        return 0;       // On retourne 0 : si l'enregistrement était possible, il s'est bien passé. S'il était forcé, on se fiche du résultat.
     }
-    else return 1;
+    else return 1;      // Et s'il n'était pas possible, on renvoie 1. L'interface QML va evoyer une demande de confirmation
 }
 
 void game::getNomPartie(){
+    // Ici, in crée la liste avec les noms de toutes les parties.
+
     ifstream parties(nomFichier.c_str());
     string nom;
     string mot;
     int longNom;
     string trash;
-    parties>>longNom;
-    for (int k=0; k<longNom; k++){
+    parties>>longNom;                   // On récupère la longueur du 1er nom
+    for (int k=0; k<longNom; k++){      // On le reconstitue
         parties>>mot;
         nom+=mot+" ";
-    }
-    nom.pop_back();
-    while(getline(parties, trash)){
+    } nom.pop_back();
+    while(getline(parties, trash)){     // Et on parcourt la boucle
         nomsParties.push_back(QString::fromStdString(nom));
         parties>>longNom;
         nom="";
@@ -272,20 +294,26 @@ void game::getNomPartie(){
         }
         nom.pop_back();
     };
+    // L'utilisation d'une do{}while() ne permet pas d'enlever la première itération de la boucle,
+    // Au contraire elle crée un doublon, lorsqu'on arrive sur la dernière ligne (vide)
 }
 
 bool game::rechPartie(string nom){
+    // Ici, on vérifie si un nom de partie a déjà été emprunté.
+    // Même principe, avec cette fois un test dans la boucle,
+    // et une vérification de la condition d'arrêt à la fin.
+
     ifstream parties(nomFichier.c_str());
     string test;
     int longTest;
     string mot;
     string trash;
+
     parties>>longTest;
     for (int k=0; k<longTest; k++){
         parties>>mot;
         test+=mot+" ";
-    }
-    test.pop_back();
+    } test.pop_back();
     while(test!=nom && getline(parties, trash)){
         parties>>longTest;
         test="";
@@ -300,6 +328,10 @@ bool game::rechPartie(string nom){
 }
 
 void game::chargePartie(QString nom){
+    // Dans cette partie, on va procéder en 2 étapes :
+    //      - aller chercher la ligne à charger
+    //      - charger la ligne
+
     ifstream parties(nomFichier.c_str());
     string nomStr=nom.toStdString();
     string test;
@@ -308,6 +340,7 @@ void game::chargePartie(QString nom){
     string trash;
     int longueurT;
 
+    // On parcourt le fichier txt jusqu'à la bonne ligne
     parties>>longTest;
     for (int k=0; k<longTest; k++){
         parties>>mot;
@@ -322,8 +355,12 @@ void game::chargePartie(QString nom){
             test+=mot+" ";
         } test.pop_back();
     }
+
+    // La ligne en cours est la bonne : on récupère les données
     parties>>etape;
     parties>>longueurT;
+
+    // Et on reconstitue T
     for (int k=0; k<longueurT; k++){
         Damier = new int* [taille];
         for (int i=0; i<taille; i++){
@@ -334,11 +371,15 @@ void game::chargePartie(QString nom){
         }
         T.push_back(Damier);
     }
-    gameChanged();
-
+    gameChanged();      // On met à jour le damier.
 }
 
 void game::deletePartie(QString nom){
+    // On ne peut pas éditer directement un txt (ou en tout cas je n'ai pas trouvé les fonctions).
+    // Pour contourner le problème, on crée un nouveau fichier dans lequel on recopie l'ancien, à
+    // l'exception de la ligne à supprimer.
+    // Puis on supprime l'ancien fichier, et on renomme le nouveau.
+
     ifstream parties(nomFichier.c_str());
     ofstream temp(tempFichier.c_str());
     string nomStr=nom.toStdString();
@@ -364,10 +405,8 @@ void game::deletePartie(QString nom){
             test+=mot+" ";
         } test.pop_back();
     }
-
     parties.close();
     temp.close();
     remove(nomFichier.c_str());
     rename(tempFichier.c_str(),nomFichier.c_str());
-
 }

@@ -39,7 +39,7 @@ Window {
         y: 66
         width: 225
         height: 225
-        color: "#bbada0"
+        color: vueGame.templateQML[2]
         focus: true
 
         Case {
